@@ -36,7 +36,7 @@ const estimateDollarsInFlight = (infected, avgIncome, periodType, time) => {
   return Math.floor(infected * 0.65 * avgIncome * timeInDays);
 };
 
-const severeCasesByTime = (infected) => 0.15 * infected;
+const severeCasesByTime = (infected) => Number((0.15 * infected).toFixed(1));
 
 const casesForICUByTime = (infectionsByTime) => {
   const val = Math.floor(0.05 * infectionsByTime);
@@ -58,7 +58,7 @@ const getImpactData = (data) => {
   );
   impact.severeCasesByRequestedTime = severeCasesByTime(
     impact.infectionsByRequestedTime
-  ).toFixed(1);
+  );
   impact.hospitalBedsByRequestedTime = estimateHospitalBedsByTime(
     impact.severeCasesByRequestedTime,
     data.totalHospitalBeds
@@ -88,7 +88,7 @@ const getSevereImpactData = (data) => {
   );
   severeImpact.severeCasesByRequestedTime = severeCasesByTime(
     severeImpact.infectionsByRequestedTime
-  ).toFixed(1);
+  );
   severeImpact.hospitalBedsByRequestedTime = estimateHospitalBedsByTime(
     severeImpact.severeCasesByRequestedTime,
     data.totalHospitalBeds
