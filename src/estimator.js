@@ -1,13 +1,13 @@
 const convertToDays = (periodType, time) => {
   switch (periodType) {
     case 'weeks':
-      time *= 7;
+      time = 7 * time;
       break;
     case 'months':
-      time *= 30;
+      time = 30 * time;
       break;
     default:
-      time *= 1;
+      time = 1 * time;
       break;
   }
   return time;
@@ -45,8 +45,7 @@ const getImpactData = (data) => {
     data.totalHospitalBeds
   );
   impact.casesForICUByRequestedTime = 0.05 * impact.infectionsByRequestedTime;
-  impact.casesForVentilatorsByRequestedTime =
-    0.02 * impact.infectionsByRequestedTime;
+  impact.casesForVentilatorsByRequestedTime = 0.02 * impact.infectionsByRequestedTime;
   impact.dollarsInFlight = estimateDollarsInFlight(
     impact.infectionsByRequestedTime,
     data.region.avgDailyIncomeInUSD,
@@ -64,16 +63,13 @@ const getSevereImpactData = (data) => {
     data.periodType,
     data.timeToElapse
   );
-  severeImpact.severeCasesByRequestedTime =
-    0.15 * severeImpact.infectionsByRequestedTime;
+  severeImpact.severeCasesByRequestedTime = 0.15 * severeImpact.infectionsByRequestedTime;
   severeImpact.hospitalBedsByRequestedTime = estimateHospitalBedsByTime(
     severeImpact.severeCasesByRequestedTime,
     data.totalHospitalBeds
   );
-  severeImpact.casesForICUByRequestedTime =
-    0.05 * severeImpact.infectionsByRequestedTime;
-  severeImpact.casesForVentilatorsByRequestedTime =
-    0.02 * severeImpact.infectionsByRequestedTime;
+  severeImpact.casesForICUByRequestedTime = 0.05 * severeImpact.infectionsByRequestedTime;
+  severeImpact.casesForVentilatorsByRequestedTime = 0.02 * severeImpact.infectionsByRequestedTime;
   severeImpact.dollarsInFlight = estimateDollarsInFlight(
     severeImpact.infectionsByRequestedTime,
     data.region.avgDailyIncomeInUSD,
