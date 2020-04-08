@@ -1,23 +1,3 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
-/* eslint-disable eol-last */
-/* eslint-disable indent */
-/* eslint-disable no-param-reassign */
-const inputData = {
-    region: {
-        name: 'Africa',
-        avgAge: 19.7,
-        avgDailyIncomeInUSD: 5,
-        avgDailyIncomePopulation: 0.71
-    },
-    periodType: 'days',
-    timeToElapse: 58,
-    reportedCases: 674,
-    population: 66622705,
-    totalHospitalBeds: 1380614
-};
-
 const convertToDays = (periodType, time) => {
     switch (periodType) {
         case 'weeks':
