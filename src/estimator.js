@@ -18,11 +18,18 @@ const convertToDays = (periodType, time) => {
   return dayTime;
 };
 
+const infectedEstimateRequirement = {};
+
 const estimateInfectedAfterDays = (infected, periodType, time) => {
   const timeInDays = convertToDays(periodType, time);
-  const daysFactor = Math.floor(timeInDays / 3);
-  const estimatedAfterDays = infected * 2 ** daysFactor;
-  return estimatedAfterDays;
+  const daysFactor = timeInDays / 3;
+  if (!infectedEstimateRequirement.daysFactor) {
+    infectedEstimateRequirement.daysFactor = daysFactor;
+  } else {
+    infectedEstimateRequirement.severeDaysFactor = daysFactor;
+  }
+
+  return infected * 2 ** Math.floor(daysFactor);
 };
 
 const estimateHospitalBedsByTime = (severeCases, totalBeds) => {
@@ -36,7 +43,12 @@ const estimateDollarsInFlight = (infected, avgIncome, periodType, time) => {
   return Math.floor(infected * 0.65 * avgIncome * timeInDays);
 };
 
-const severeCasesByTime = (infected) => Number((0.15 * infected).toFixed(1));
+const severeCasesByTime = (infected, daysFactor) => {
+  const severelyInfected = Number(
+    (0.15 * infected * 2 ** daysFactor).toFixed(1)
+  );
+  return severelyInfected;
+};
 
 const casesForICUByTime = (infectionsByTime) => {
   const val = Math.floor(0.05 * infectionsByTime);
@@ -57,7 +69,8 @@ const getImpactData = (data) => {
     data.timeToElapse
   );
   impact.severeCasesByRequestedTime = severeCasesByTime(
-    impact.infectionsByRequestedTime
+    impact.currentlyInfected,
+    infectedEstimateRequirement.daysFactor
   );
   impact.hospitalBedsByRequestedTime = estimateHospitalBedsByTime(
     impact.severeCasesByRequestedTime,
@@ -87,7 +100,8 @@ const getSevereImpactData = (data) => {
     data.timeToElapse
   );
   severeImpact.severeCasesByRequestedTime = severeCasesByTime(
-    severeImpact.infectionsByRequestedTime
+    severeImpact.infectionsByRequestedTime,
+    infectedEstimateRequirement.severeDaysFactor
   );
   severeImpact.hospitalBedsByRequestedTime = estimateHospitalBedsByTime(
     severeImpact.severeCasesByRequestedTime,
@@ -116,4 +130,20 @@ const covid19ImpactEstimator = (data) => {
   return { data, impact, severeImpact };
 };
 
-export default covid19ImpactEstimator;
+const inputData = {
+  region: {
+    name: 'Africa',
+    avgAge: 19.7,
+    avgDailyIncomeInUSD: 5,
+    avgDailyIncomePopulation: 0.71
+  },
+  periodType: 'days',
+  timeToElapse: 58,
+  reportedCases: 674,
+  population: 66622705,
+  totalHospitalBeds: 1380614
+};
+
+console.log(covid19ImpactEstimator(inputData));
+
+// export default covid19ImpactEstimator;
