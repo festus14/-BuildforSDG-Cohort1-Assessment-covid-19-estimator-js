@@ -1,16 +1,16 @@
 const convertToDays = (periodType, time) => {
   switch (periodType) {
     case 'weeks':
-      time = 7 * time;
+      dayTime = 7 * time;
       break;
     case 'months':
-      time = 30 * time;
+      dayTime = 30 * time;
       break;
     default:
-      time = 1 * time;
+      dayTime = 1 * time;
       break;
   }
-  return time;
+  return dayTime;
 };
 
 const estimateInfectedAfterDays = (infected, periodType, time) => {
