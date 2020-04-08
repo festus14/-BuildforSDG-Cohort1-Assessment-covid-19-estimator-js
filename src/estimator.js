@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const convertToDays = (periodType, time) => {
   let dayTime;
   switch (periodType) {
