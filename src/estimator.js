@@ -1,7 +1,9 @@
-/* eslint-disable linebreak-style */
 const convertToDays = (periodType, time) => {
-  let dayTime = time;
+  let dayTime;
   switch (periodType) {
+    case 'days':
+      dayTime = 1 * time;
+      break;
     case 'weeks':
       dayTime = 7 * time;
       break;
@@ -9,7 +11,7 @@ const convertToDays = (periodType, time) => {
       dayTime = 30 * time;
       break;
     default:
-      dayTime = 1 * time;
+      dayTime = time;
       break;
   }
   return dayTime;
@@ -17,27 +19,33 @@ const convertToDays = (periodType, time) => {
 
 const estimateInfectedAfterDays = (infected, periodType, time) => {
   const timeInDays = convertToDays(periodType, time);
-  const daysFactor = timeInDays / 3;
+  const daysFactor = Math.floor(timeInDays / 3);
   const estimatedAfterDays = infected * 2 ** daysFactor;
   return estimatedAfterDays;
 };
 
 const estimateHospitalBedsByTime = (severeCases, totalBeds) => {
-  const availableBeds = 0.35 * totalBeds;
+  const availableBeds = Math.floor(0.35 * totalBeds);
   if (availableBeds >= severeCases) return availableBeds;
   return availableBeds - severeCases;
 };
 
 const estimateDollarsInFlight = (infected, avgIncome, periodType, time) => {
   const timeInDays = convertToDays(periodType, time);
-  return infected * 0.65 * avgIncome * timeInDays;
+  return Math.floor(infected * 0.65 * avgIncome * timeInDays);
 };
 
-const severeCasesByTime = (infected) => 0.15 * infected;
+const severeCasesByTime = (infected) => Math.floor(0.15 * infected);
 
-const casesForICUByTime = (infectionsByTime) => 0.05 * infectionsByTime;
+const casesForICUByTime = (infectionsByTime) => {
+  const val = Math.floor(0.05 * infectionsByTime);
+  return val;
+};
 
-const casesForVentilatorsByTime = (infectionsByTime) => 0.02 * infectionsByTime;
+const casesForVentilatorsByTime = (infectionsByTime) => {
+  const val = Math.floor(0.02 * infectionsByTime);
+  return val;
+};
 
 const getImpactData = (data) => {
   const impact = {};
@@ -102,25 +110,27 @@ const getSevereImpactData = (data) => {
 
 const covid19ImpactEstimator = (data) => {
   const impact = getImpactData(data);
-  const severeImpact = getSevereImpactData(data);
+  // const severeImpact = getSevereImpactData(data);
+  getSevereImpactData(data);
+  return { impact };
 
-  return { data, impact, severeImpact };
+  // return { data, impact, severeImpact };
 };
 
-// const inputData = {
-//   region: {
-//     name: 'Africa',
-//     avgAge: 19.7,
-//     avgDailyIncomeInUSD: 5,
-//     avgDailyIncomePopulation: 0.71
-//   },
-//   periodType: 'days',
-//   timeToElapse: 58,
-//   reportedCases: 674,
-//   population: 66622705,
-//   totalHospitalBeds: 1380614
-// };
+const inputData = {
+  region: {
+    name: 'Africa',
+    avgAge: 19.7,
+    avgDailyIncomeInUSD: 5,
+    avgDailyIncomePopulation: 0.71
+  },
+  periodType: 'days',
+  timeToElapse: 58,
+  reportedCases: 674,
+  population: 66622705,
+  totalHospitalBeds: 1380614
+};
 
-// console.log(covid19ImpactEstimator(inputData));
+console.log(covid19ImpactEstimator(inputData));
 
-export default covid19ImpactEstimator;
+// export default covid19ImpactEstimator;
