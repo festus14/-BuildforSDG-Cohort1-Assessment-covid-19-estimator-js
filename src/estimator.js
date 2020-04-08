@@ -1,5 +1,5 @@
 const convertToDays = (periodType, time) => {
-    const dayTime = 0;
+    let dayTime = 0;
   switch (periodType) {
     case 'weeks':
       dayTime = 7 * time;
