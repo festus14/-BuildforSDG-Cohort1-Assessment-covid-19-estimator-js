@@ -27,7 +27,7 @@ const estimateInfectedAfterDays = (infected, periodType, time) => {
 
 const estimateHospitalBedsByTime = (severeCases, totalBeds) => {
   const availableBeds = 0.35 * totalBeds;
-  return Math.trunc(availableBeds - severeCases) + 1;
+  return Math.floor(availableBeds - severeCases) + 1;
 };
 
 const estimateDollarsInFlight = (infected, avgIncome, periodType, time) => {
