@@ -27,7 +27,6 @@ const estimateInfectedAfterDays = (infected, periodType, time) => {
 
 const estimateHospitalBedsByTime = (severeCases, totalBeds) => {
   const availableBeds = Number((0.35 * totalBeds).toFixed(0));
-  if (availableBeds >= severeCases) return availableBeds;
   return availableBeds - severeCases;
 };
 
