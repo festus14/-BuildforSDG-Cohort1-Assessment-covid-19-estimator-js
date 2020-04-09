@@ -18,18 +18,11 @@ const convertToDays = (periodType, time) => {
   return dayTime;
 };
 
-const infectedEstimateRequirement = {};
-
 const estimateInfectedAfterDays = (infected, periodType, time) => {
   const timeInDays = convertToDays(periodType, time);
-  const daysFactor = timeInDays / 3;
-  if (!infectedEstimateRequirement.daysFactor) {
-    infectedEstimateRequirement.daysFactor = daysFactor;
-  } else {
-    infectedEstimateRequirement.severeDaysFactor = daysFactor;
-  }
-
-  return infected * 2 ** Math.floor(daysFactor);
+  const daysFactor = Math.floor(timeInDays / 3);
+  const estimatedAfterDays = infected * 2 ** daysFactor;
+  return estimatedAfterDays;
 };
 
 const estimateHospitalBedsByTime = (severeCases, totalBeds) => {
@@ -43,12 +36,7 @@ const estimateDollarsInFlight = (infected, avgIncome, periodType, time) => {
   return Math.floor(infected * 0.65 * avgIncome * timeInDays);
 };
 
-const severeCasesByTime = (infected, daysFactor) => {
-  const severelyInfected = Number(
-    (0.15 * infected * 2 ** daysFactor).toFixed(1)
-  );
-  return severelyInfected;
-};
+const severeCasesByTime = (infected) => Math.round(0.15 * infected);
 
 const casesForICUByTime = (infectionsByTime) => {
   const val = Math.floor(0.05 * infectionsByTime);
@@ -69,8 +57,7 @@ const getImpactData = (data) => {
     data.timeToElapse
   );
   impact.severeCasesByRequestedTime = severeCasesByTime(
-    impact.currentlyInfected,
-    infectedEstimateRequirement.daysFactor
+    impact.infectionsByRequestedTime
   );
   impact.hospitalBedsByRequestedTime = estimateHospitalBedsByTime(
     impact.severeCasesByRequestedTime,
@@ -100,8 +87,7 @@ const getSevereImpactData = (data) => {
     data.timeToElapse
   );
   severeImpact.severeCasesByRequestedTime = severeCasesByTime(
-    severeImpact.infectionsByRequestedTime,
-    infectedEstimateRequirement.severeDaysFactor
+    severeImpact.infectionsByRequestedTime
   );
   severeImpact.hospitalBedsByRequestedTime = estimateHospitalBedsByTime(
     severeImpact.severeCasesByRequestedTime,
