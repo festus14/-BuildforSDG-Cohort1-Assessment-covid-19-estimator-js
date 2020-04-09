@@ -48,11 +48,14 @@ const estimateDollarsInFlight = (
   infected,
   avgIncome,
   avgIncomePopulation,
+  population,
   periodType,
   time
 ) => {
   const timeInDays = convertToDays(periodType, time);
-  return Math.floor(infected * avgIncome * avgIncomePopulation * timeInDays);
+  return Math.floor(
+    infected * avgIncome * avgIncomePopulation * population * timeInDays
+  );
 };
 
 const getImpactData = (data) => {
@@ -80,6 +83,7 @@ const getImpactData = (data) => {
     impact.infectionsByRequestedTime,
     data.region.avgDailyIncomeInUSD,
     data.region.avgDailyIncomePopulation,
+    data.population,
     data.periodType,
     data.timeToElapse
   );
@@ -111,6 +115,7 @@ const getSevereImpactData = (data) => {
     severeImpact.infectionsByRequestedTime,
     data.region.avgDailyIncomeInUSD,
     data.region.avgDailyIncomePopulation,
+    data.population,
     data.periodType,
     data.timeToElapse
   );
