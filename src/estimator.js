@@ -38,13 +38,13 @@ const estimateDollarsInFlight = (infected, avgIncome, periodType, time) => {
 
 const severeCasesByTime = (infected) => Math.round(0.15 * infected);
 
-const casesForICUByTime = (infectionsByTime) => {
-  const val = Math.floor(0.05 * infectionsByTime);
+const casesForICUByTime = (infections) => {
+  const val = 0.05 * infections;
   return val;
 };
 
-const casesForVentilatorsByTime = (infectionsByTime) => {
-  const val = Math.floor(0.02 * infectionsByTime);
+const casesForVentilatorsByTime = (infections) => {
+  const val = 0.02 * infections;
   return val;
 };
 
