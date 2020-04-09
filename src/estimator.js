@@ -44,13 +44,15 @@ const casesForVentilatorsByTime = (infections) => {
   return ventilatorCases;
 };
 
-const estimateDollarsInFlight = (infected, avgIncome) => {
-  // const timeInDays = convertToDays(periodType, time);
-  // return Math.floor(infected * 0.65 * avgIncome * timeInDays);
-  if (avgIncome > 1.5) {
-    return infected * avgIncome * 30;
-  }
-  return infected * 0.65 * avgIncome * 30;
+const estimateDollarsInFlight = (
+  infected,
+  avgIncome,
+  avgIncomePopulation,
+  periodType,
+  time
+) => {
+  const timeInDays = convertToDays(periodType, time);
+  return Math.floor(infected * avgIncome * avgIncomePopulation * timeInDays);
 };
 
 const getImpactData = (data) => {
@@ -76,7 +78,10 @@ const getImpactData = (data) => {
   );
   impact.dollarsInFlight = estimateDollarsInFlight(
     impact.infectionsByRequestedTime,
-    data.region.avgDailyIncomeInUSD
+    data.region.avgDailyIncomeInUSD,
+    data.region.avgDailyIncomePopulation,
+    data.periodType,
+    data.timeToElapse
   );
   return impact;
 };
@@ -104,7 +109,10 @@ const getSevereImpactData = (data) => {
   );
   severeImpact.dollarsInFlight = estimateDollarsInFlight(
     severeImpact.infectionsByRequestedTime,
-    data.region.avgDailyIncomeInUSD
+    data.region.avgDailyIncomeInUSD,
+    data.region.avgDailyIncomePopulation,
+    data.periodType,
+    data.timeToElapse
   );
 
   return severeImpact;
@@ -132,12 +140,5 @@ const covid19ImpactEstimator = (data) => {
 // };
 
 // console.log(covid19ImpactEstimator(inputData));
-
-// const dollarsInFlight = () => {
-//   if (avgIncome > 1.5) {
-//     return infectionsByRequestedTime * avgIncome * 30;
-//   }
-//   return infectionsByRequestedTime * 0.65 * avgIncome * 30;
-// };
 
 export default covid19ImpactEstimator;
