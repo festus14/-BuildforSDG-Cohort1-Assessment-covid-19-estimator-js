@@ -139,6 +139,4 @@ const covid19ImpactEstimator = (data) => {
 //   totalHospitalBeds: 1380614
 // };
 
-// console.log(covid19ImpactEstimator(inputData));
-
 export default covid19ImpactEstimator;
