@@ -43,7 +43,7 @@ const casesForICUByTime = (infections) => {
 };
 
 const casesForVentilatorsByTime = (infections) => {
-  const val = 0.02 * infections;
+  const val = Math.trunc(0.02 * infections);
   return val;
 };
 
