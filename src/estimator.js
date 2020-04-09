@@ -35,12 +35,12 @@ const estimateHospitalBedsByTime = (severeCases, totalBeds) => {
 };
 
 const casesForICUByTime = (infections) => {
-  const ICUCases = 0.05 * infections;
+  const ICUCases = Math.floor(0.05 * infections);
   return ICUCases;
 };
 
 const casesForVentilatorsByTime = (infections) => {
-  const ventilatorCases = 0.02 * infections;
+  const ventilatorCases = Math.floor(0.02 * infections);
   return ventilatorCases;
 };
 
