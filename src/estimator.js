@@ -53,9 +53,7 @@ const estimateDollarsInFlight = (
   time
 ) => {
   const timeInDays = convertToDays(periodType, time);
-  return Math.floor(
-    ((infected * avgIncome * avgIncomePopulation) / population) * timeInDays
-  );
+  return Math.floor(infected * avgIncome * 0.65 * timeInDays);
 };
 
 const getImpactData = (data) => {
