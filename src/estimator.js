@@ -46,7 +46,7 @@ const casesForVentilatorsByTime = (infections) => {
 
 const estimateDollarsInFlight = (infected, avgIncome, periodType, time) => {
   const timeInDays = convertToDays(periodType, time);
-  return Math.floor(infected * 0.65 * avgIncome * timeInDays);
+  return Math.floor(infected * avgIncome * timeInDays);
 };
 
 const getImpactData = (data) => {
