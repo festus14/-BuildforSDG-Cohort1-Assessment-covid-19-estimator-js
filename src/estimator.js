@@ -48,7 +48,6 @@ const estimateDollarsInFlight = (
   infected,
   Income,
   IncomePopulation,
-  population,
   periodType,
   time
 ) => {
@@ -81,7 +80,6 @@ const getImpactData = (data) => {
     impact.infectionsByRequestedTime,
     data.region.avgDailyIncomeInUSD,
     data.region.avgDailyIncomePopulation,
-    data.population,
     data.periodType,
     data.timeToElapse
   );
@@ -113,7 +111,6 @@ const getSevereImpactData = (data) => {
     severeImpact.infectionsByRequestedTime,
     data.region.avgDailyIncomeInUSD,
     data.region.avgDailyIncomePopulation,
-    data.population,
     data.periodType,
     data.timeToElapse
   );
@@ -127,5 +124,19 @@ const covid19ImpactEstimator = (data) => {
 
   return { data, impact, severeImpact };
 };
+
+// const inputData = {
+//   region: {
+//     name: 'Africa',
+//     avgAge: 19.7,
+//     avgDailyIncomeInUSD: 5,
+//     avgDailyIncomePopulation: 0.71
+//   },
+//   periodType: 'days',
+//   timeToElapse: 58,
+//   reportedCases: 674,
+//   population: 66622705,
+//   totalHospitalBeds: 1380614
+// };
 
 export default covid19ImpactEstimator;
