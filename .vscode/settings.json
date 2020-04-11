@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "prettier.endOfLine": "crlf",
+  "cSpell.words": [
+    "Buildfor",
+    "Gradr",
+    "Injest",
+    "airbnb",
+    "autorun",
+    "chalu",
+    "lhci",
+    "lighthouserc",
+    "macos"
+  ]
+}
