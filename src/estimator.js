@@ -57,6 +57,7 @@ const estimateDollarsInFlight = (
 
 const getImpactData = (data) => {
   const impact = {};
+
   impact.currentlyInfected = data.reportedCases * 10;
   impact.infectionsByRequestedTime = estimateInfectedAfterDays(
     impact.currentlyInfected,
@@ -88,6 +89,7 @@ const getImpactData = (data) => {
 
 const getSevereImpactData = (data) => {
   const severeImpact = {};
+
   severeImpact.currentlyInfected = data.reportedCases * 50;
   severeImpact.infectionsByRequestedTime = estimateInfectedAfterDays(
     severeImpact.currentlyInfected,
